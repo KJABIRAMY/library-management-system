@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Management System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Library Management System</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="search.html">Search Books</a></li>
+            <li><a href="borrow.html">Borrow/Return</a></li>
+            <li><a href="history.html">User History</a></li>
+            <li><a href="admin.html">Admin Panel</a></li>
+        </ul>
+    </nav>
+
+    <section id="content">
+        <h2>Welcome to the Library Management System</h2>
+        
+        <div id="login-section">
+            <h3>Login</h3>
+            <input type="text" id="username" placeholder="Username">
+            <input type="password" id="password" placeholder="Password">
+            <button onclick="loginUser()">Login</button>
+            <p id="login-message"></p>
+        </div>
+
+        <div id="register-section">
+            <h3>Register</h3>
+            <input type="text" id="reg-username" placeholder="Username">
+            <input type="password" id="reg-password" placeholder="Password">
+            <input type="password" id="reg-confirm-password" placeholder="Confirm Password">
+            <select id="reg-role">
+                <option value="regular">Regular User</option>
+                <option value="premium">Premium User</option>
+                <option value="librarian">Librarian</option>
+            </select>
+            <button onclick="registerUser()">Register</button>
+            <p id="register-message"></p>
+        </div>
+
+        <p id="user-info"></p>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Library Management System</p>
+    </footer>
+
+    <script src="books.js"></script>
+    <script src="users.js"></script>
+    <script src="borrowing.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

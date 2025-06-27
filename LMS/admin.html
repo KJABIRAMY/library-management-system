@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Library Admin Panel</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="search.html">Search Books</a></li>
+            <li><a href="borrow.html">Borrow/Return</a></li>
+            <li><a href="history.html">User History</a></li>
+            <li><a href="admin.html">Admin Panel</a></li>
+        </ul>
+    </nav>
+
+    <section id="admin-section">
+        <h2>Manage Library Books</h2>
+        <p id="admin-message"></p>
+
+        <div class="admin-form">
+            <input type="text" id="book-title" placeholder="Book Title">
+            <input type="text" id="book-author" placeholder="Author">
+            <button onclick="addBookAndRefresh()">Add Book</button>
+        </div>
+
+        <h3>All Books</h3>
+        <ul id="admin-book-list" class="admin-list"></ul>
+
+        <h3>All Users</h3>
+        <ul id="user-list" class="admin-list"></ul>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Library Management System</p>
+    </footer>
+
+    <script src="books.js"></script>
+    <script src="users.js"></script>
+    <script src="borrowing.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

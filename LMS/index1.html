@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>E-Commerce Store</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+  <div class="container mx-auto p-6">
+    <h1 class="text-3xl font-bold mb-4">🛒 E-Commerce Store</h1>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {% for product in products %}
+      <div class="bg-white p-4 rounded shadow">
+        <h2 class="text-xl font-semibold">{{ product.name }}</h2>
+        <p class="text-gray-600">₹{{ product.price }}</p>
+        <form method="POST" action="/add-to-cart">
+          <input type="hidden" name="product_id" value="{{ product.id }}">
+          <button type="submit" class="mt-2 bg-blue-500 text-white px-4 py-2 rounded">Add to Cart</button>
+        </form>
+      </div>
+      {% endfor %}
+    </div>
+    <a href="/cart" class="mt-6 inline-block bg-green-500 text-white px-4 py-2 rounded">🛍️ View Cart</a>
+  </div>
+</body>
+</html>

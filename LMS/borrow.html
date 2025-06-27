@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Borrow/Return Books</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Borrow/Return Books</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="search.html">Search Books</a></li>
+            <li><a href="borrow.html">Borrow/Return</a></li>
+            <li><a href="history.html">User History</a></li>
+            <li><a href="admin.html">Admin Panel</a></li>
+        </ul>
+    </nav>
+
+    <section id="borrow-section">
+        <div id="borrowed-books">
+            <h2>Your Borrowed Books</h2>
+            <div id="borrowed-list" class="book-grid"></div>
+        </div>
+
+        <div id="available-books">
+            <h2>Available Books</h2>
+            <div id="available-list" class="book-grid"></div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Library Management System</p>
+    </footer>
+
+    <script src="books.js"></script>
+    <script src="users.js"></script>
+    <script src="borrowing.js"></script>
+    <script src="script.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            displayAvailableBooks();
+            displayBorrowedBooks();
+        });
+
+        function displayAvailableBooks() {
+            const availableList = document.getElementById("available-list");
+            const books = bookService.getBooks().filter(book => book.available);
+
+            availableList.innerHTML = "";
+
+            if (books.length === 0) {
+                availableList.innerHTML = "<p>No books available for borrowing.</p>";
+                return;
+            }
+
+            books.forEach(book => {
+                const bookElement = document.createElement("div");
+                bookElement.className = "book-item";
+                bookElement.innerHTML = `
+                    <h3>${book.title}</h3>
+                    <p>by ${book.author}</p>
+                    <button onclick="borrowBookAndRefresh(${book.id})">Borrow</button>
+                `;
+                availableList.appendChild(bookElement);
+            });
+        }
+
+        function displayBorrowedBooks() {
+            const borrowedList = document.getElementById("borrowed-list");
+            const currentUser = userService.getCurrentUser();
+            if (!currentUser) return;
+
+            const borrowedBooks = borrowService.getUserBorrowedBooks(currentUser.username);
+
+            borrowedList.innerHTML = borrowedBooks.length ? "" : "<p>You have not borrowed any books.</p>";
+
+            borrowedBooks.forEach(b => {
+                const book = bookService.getBookById(b.bookId);
+                const bookElement = document.createElement("div");
+                bookElement.className = "book-item";
+                bookElement.innerHTML = `
+                    <h3>${book.title}</h3>
+                    <p>by ${book.author}</p>
+                    <button onclick="returnBookAndRefresh(${book.id})">Return</button>
+                `;
+                borrowedList.appendChild(bookElement);
+            });
+        }
+    </script>
+</body>
+</html>

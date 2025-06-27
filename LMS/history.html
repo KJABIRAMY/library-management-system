@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Borrowing History</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>User Borrowing History</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="search.html">Search Books</a></li>
+            <li><a href="borrow.html">Borrow/Return</a></li>
+            <li><a href="history.html">User History</a></li>
+            <li><a href="admin.html">Admin Panel</a></li>
+        </ul>
+    </nav>
+
+    <section id="history-section">
+        <h2>Your Borrowing History</h2>
+        <ul id="history-list" class="history-list"></ul>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Library Management System</p>
+    </footer>
+
+    <script src="books.js"></script>
+    <script src="users.js"></script>
+    <script src="borrowing.js"></script>
+    <script src="script.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            displayBorrowingHistory();
+        });
+
+        function displayBorrowingHistory() {
+            const historyList = document.getElementById("history-list");
+            const currentUser = userService.getCurrentUser();
+
+            if (!currentUser) {
+                historyList.innerHTML = "<p>Please <a href='index.html'>log in</a> to view your borrowing history.</p>";
+                return;
+            }
+
+            const userHistory = borrowService.getUserBorrowingHistory(currentUser.username);
+            historyList.innerHTML = "";
+
+            if (userHistory.length === 0) {
+                historyList.innerHTML = "<p>No borrowing history found.</p>";
+                return;
+            }
+
+            userHistory.forEach(entry => {
+                const book = bookService.getBookById(entry.bookId);
+                if (!book) return;
+
+                const historyItem = document.createElement("li");
+                historyItem.className = "history-item";
+
+                const returnStatus = entry.returnDate 
+                    ? `Returned on: ${new Date(entry.returnDate).toLocaleDateString()}`
+                    : `<span style="color: red;">Currently Borrowed</span>`;
+
+                historyItem.innerHTML = `
+                    <strong>${book.title}</strong> by ${book.author} <br>
+                    Borrowed on: ${new Date(entry.borrowDate).toLocaleDateString()} <br>
+                    ${returnStatus}
+                `;
+
+                historyList.appendChild(historyItem);
+            });
+        }
+    </script>
+</body>
+</html>
